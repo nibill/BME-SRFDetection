@@ -12,6 +12,13 @@ def insert_into_template(string,title) :
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+        <style>
+            img {
+                max-height:250px; width:auto
+                }
+        </style>
+    """
+    mid = """
         <title>{title}</title>
     </head>
     <body>
@@ -26,7 +33,7 @@ def insert_into_template(string,title) :
     </body>
     </html>"""
 
-    return start + string + end
+    return start + mid + string + end
 
 def create_html(result) :
     
@@ -39,6 +46,7 @@ def create_html(result) :
         images += "<td>" + "<img src=\"data:image/gif;base64," + imageToBase64(item[2]) + "\"></td>"
         images += "<td>" + "<img src=\"data:image/gif;base64," + imageToBase64(item[3]) + "\"></td>"
         images += "<td>" + "<img src=\"data:image/gif;base64," + imageToBase64(item[4]) + "\"></td>"
+        images += "<td>" + "<img src=\"data:image/gif;base64," + imageToBase64(item[5]) + "\"></td>"
         images += "</tr>"
 
     images = "<table class=\"table\">" + images + "</table>"

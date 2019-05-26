@@ -30,5 +30,8 @@ def getGrabCutRect(image):
 
     rect = (min(candidates[:,0]),min(candidates[:,1]),max(candidates[:,0]),max(candidates[:,1]))
 
-    print(rect)
+    #print(rect)
     return rect
+
+def denois(image):
+    return cv2.fastNlMeansDenoising(image,None,20.0,40,15) 
