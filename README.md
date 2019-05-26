@@ -14,3 +14,7 @@ SRF detection in OCT-Scans. Group project for the Signal and Image Processing co
 # Run #
 
 Run with the launch configuration from vscode or run run.py or test.py
+
+# Result #
+
+View the last result here http://htmlpreview.github.io/?https://github.com/nibill/BME-SRFDetection/blob/master/report.html
