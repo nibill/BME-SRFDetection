@@ -34,3 +34,14 @@ def getGrabCutRect(image):
 
 def denois(image):
     return cv2.fastNlMeansDenoising(image,None,20.0,40,15) 
+
+def hardColor(image):
+    for y in range(image.shape[0]):
+        for x in range(image.shape[1]):
+            c = image[y,x]
+            if c[2] > 0 and c[2] < 10 and c[1] == 0 and c[0] > 240 and c[0] < 250:
+                image[y,x][0] = 0
+                image[y,x][1] = 0
+                image[y,x][2] = 0
+
+    return image
