@@ -38,6 +38,7 @@ def create_html(result) :
         images += "<td>" + item[1] + "</td>"
         images += "<td>" + "<img src=\"data:image/gif;base64," + imageToBase64(item[2]) + "\"></td>"
         images += "<td>" + "<img src=\"data:image/gif;base64," + imageToBase64(item[3]) + "\"></td>"
+        images += "<td>" + "<img src=\"data:image/gif;base64," + imageToBase64(item[4]) + "\"></td>"
         images += "</tr>"
 
     images = "<table class=\"table\">" + images + "</table>"
