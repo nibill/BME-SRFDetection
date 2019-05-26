@@ -12,7 +12,7 @@ def grabCut(image):
     bgdModel = np.zeros((1,65),np.float64)
     fgdModel = np.zeros((1,65),np.float64)
 
-    rect = getGrabCutRect(image) #(0, image.shape[:2][0]//2, image.shape[:2][1], image.shape[:2][0])
+    rect = getGrabCutRect(image)
     cv2.grabCut(image,mask,rect,bgdModel,fgdModel,5,cv2.GC_INIT_WITH_RECT)
 
     mask2 = np.where((mask==2)|(mask==0),0,1).astype('uint8')
@@ -24,13 +24,12 @@ def getGrabCutRect(image):
     for y in range(image.shape[0]):
         for x in range(image.shape[1]):
             c = image[y,x]
-            if c[2] > 75 and c[2] < 200 and c[1] == 255 and c[0] > 120 and c[0] < 220:
+            if c[2] > 100 and c[2] < 180 and c[1] == 255 and c[0] > 150 and c[0] < 200:
                 candidates.append([x,y])
     candidates = np.array(candidates)
 
     rect = (min(candidates[:,0]),min(candidates[:,1]),max(candidates[:,0]),max(candidates[:,1]))
 
-    #print(rect)
     return rect
 
 def denois(image):
