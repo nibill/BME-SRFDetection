@@ -1,5 +1,6 @@
 import cv2
 import base64
+import numpy as np
 
 def insert_into_template(string,title) :
     start = """<!doctype html>
@@ -56,6 +57,8 @@ def create_html(result) :
 
 
 def imageToBase64(image) :
+    if isinstance(image, np.ndarray) == False:
+        return ""
     img_str = cv2.imencode('.png', image)[1].tostring()
     return base64.b64encode(img_str).decode("utf-8") 
     
