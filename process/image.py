@@ -45,3 +45,8 @@ def hardColor(image):
                 image[y,x][2] = 0
 
     return image
+
+def open(image):
+    kernel = np.ones((5,5),np.uint8)
+    opening = cv2.morphologyEx(image, cv2.MORPH_OPEN, kernel)
+    return opening
