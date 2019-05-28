@@ -8,18 +8,14 @@ def evaluation(classified):
     threshold = 0.3
     success = 0
 
-    with open('submission.csv', 'w') as csvfile:
-        writer=csv.writer(csvfile, delimiter=',', lineterminator='\n',)
-        for c in range(len(classified)):
-            if classified[c][3][2] > threshold:
-                classified[c][2] = "SRF"
-                writer.writerow('0')
-            else:
-                classified[c][2] = "noSRF"
-                writer.writerow('1')
+    for c in range(len(classified)):
+        if classified[c][3][2] > threshold:
+            classified[c][2] = "SRF"
+        else:
+            classified[c][2] = "noSRF"
 
-            if classified[c][1] == classified[c][2]:
-                success = success + 1
+        if classified[c][1] == classified[c][2]:
+            success = success + 1
 
     
 
