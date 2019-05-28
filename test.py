@@ -5,7 +5,8 @@ import numpy as np
 from queue import Queue
 
 images = process.load("data")
-images = list(filter(lambda i: i[0] != "unknown",images))
+#images = list(filter(lambda i: i[2] == "22276.png" or i[2] == "10635.png" or i[2] == "15055.png" or i[2] == "input_7_1.png" or i[2] == "input_2404_1.png" ,images))
+images = list(filter(lambda i: i[0] != "unknown" ,images))
 
 classified = []
 threads = []

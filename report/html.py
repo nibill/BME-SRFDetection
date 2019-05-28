@@ -56,6 +56,7 @@ def create_html(result,evaluation) :
         images += "<td>" + "<img src=\"data:image/gif;base64," + imageToBase64(item[12]) + "\"></td>"
         images += "<td>" + "<img src=\"data:image/gif;base64," + imageToBase64(item[13]) + "\"></td>"
         images += "<td>" + "<img src=\"data:image/gif;base64," + imageToBase64(item[14]) + "\"></td>"
+        images += "<td>" + "<img src=\"data:image/gif;base64," + imageToBase64(item[15]) + "\"></td>"
         images += "<td> blue: " + str(item[3][0]) + " red: " + str(item[3][1]) + " percent: " + str(item[3][2]) + "</td>"
         images += "<td>" + item[1] + "</td>"
         images += "<td>" + item[2] + "</td>"

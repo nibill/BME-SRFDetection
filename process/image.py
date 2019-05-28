@@ -158,8 +158,8 @@ def reduced2(mask,image):
     return image * mask
 
 def lineSegment(image):
-    image = colorPicked(image,kNewLayer13, kNewLayer10)
-
+    sub = colorPicked(image,kNewLayer13, kNewLayer4)
+    image = sub + colorPicked(image,kNewLayer2, kNewLayer2)
     return image
 
 def colorPicked(image, lower, upper):
@@ -173,10 +173,10 @@ def colorPicked(image, lower, upper):
 
 def hough(image,prev):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    gray = cv2.GaussianBlur(gray, (9, 9), 2)
+    gray = cv2.GaussianBlur(gray, (9, 9), 1.1)
 
     edges = cv2.Canny(gray, 75, 150)
-    lines = cv2.HoughLinesP(edges, 1, np.pi/180, 30, minLineLength=10, maxLineGap=50)
+    lines = cv2.HoughLinesP(edges, 1, np.pi/90, 110, minLineLength=10, maxLineGap=50)
     if lines is not None:
         for line in lines:
             x1, y1, x2, y2 = line[0]
@@ -186,20 +186,21 @@ def hough(image,prev):
     image = cv2.morphologyEx(image, cv2.MORPH_CLOSE, kernel)
 
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    _, image = cv2.threshold(image, 127, 255, cv2.THRESH_BINARY)
+    _, image = cv2.threshold(image, 1, 255, cv2.THRESH_BINARY)
 
     mask = prev.copy()
 
     for x in range(image.shape[1]):
         indices = [i for i, x in enumerate(image[:,x]) if x == 255]
         if len(indices) == 0:
+            mask[:,x] = 0
             continue
         amin = min(indices)
         amax = max(indices)
 
         mask[:,x] = 0
         mask[:,x][(amax-amin)//2+amin:amax] = 1
-    return prev * mask
+    return prev * mask,mask
 
 def count(image):
     blue = len(image[np.where((image == kNewLayer0).all(axis = 2))]) + len(image[np.where((image == kNewLayer15).all(axis = 2))])
@@ -209,3 +210,40 @@ def count(image):
         percent = blue/red
         
     return [blue,red,percent]
+
+def hough2(image,prev,maskPrev):
+    # gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    # gray = cv2.GaussianBlur(gray, (9, 9), 2)
+
+    # edges = cv2.Canny(gray, 75, 150)
+    # lines = cv2.HoughLinesP(edges, 1, np.pi/180, 30, minLineLength=10, maxLineGap=50)
+    # if lines is not None:
+    #     for line in lines:
+    #         x1, y1, x2, y2 = line[0]
+    #         cv2.line(image, (x1, y1), (x2, y2), (0, 255, 0), 10)
+
+    # kernel = np.ones((63,63),np.uint8)
+    # image = cv2.morphologyEx(image, cv2.MORPH_CLOSE, kernel)
+    mask = maskPrev.copy()
+    image = prev * maskPrev
+    image = lineSegment(image)
+
+    kernel = np.ones((63,63),np.uint8)
+    image = cv2.morphologyEx(image, cv2.MORPH_CLOSE, kernel)
+    #return image,mask
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    _, image = cv2.threshold(image, 1, 255, cv2.THRESH_BINARY)
+
+    for x in range(image.shape[1]):
+        indices = [i for i, x in enumerate(image[:,x]) if x == 255]
+        if len(indices) == 0:
+            mask[:,x] = 0
+            continue
+        amin = int(min(indices))
+        amax = int(max(indices))
+
+        mask[:,x] = 0
+        mask[:,x][amin:amax] = 1
+
+    image = prev * mask
+    return image,mask
