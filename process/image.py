@@ -203,8 +203,11 @@ def hough(image,prev):
     return prev * mask,mask
 
 def count(image):
-    blue = len(image[np.where((image == kNewLayer0).all(axis = 2))]) + len(image[np.where((image == kNewLayer15).all(axis = 2))])
-    red = len(image[np.where((image == kNewLayer13).all(axis = 2))])
+    blue = len(image[np.where((image == kNewLayer0).all(axis = 2))]) 
+    blue = blue + len(image[np.where((image == kNewLayer15).all(axis = 2))])
+    gray_image = cv2.cvtColor(colorPicked(image,kNewLayer13, kNewLayer4), cv2.COLOR_BGR2GRAY)
+    red = cv2.countNonZero(gray_image)
+
     percent = np.inf
     if blue != 0 and red != 0:
         percent = blue/red

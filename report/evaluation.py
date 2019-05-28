@@ -5,7 +5,7 @@ def evaluation(classified):
     classified = sorted(classified, key=lambda c: c[3][2])
     len_count = len(list(filter(lambda c: c[1] != "unknown",classified)))
 
-    threshold = 0.3
+    threshold = 0.17
     success = 0
 
     for c in range(len(classified)):
